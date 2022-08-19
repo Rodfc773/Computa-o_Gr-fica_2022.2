@@ -1,5 +1,5 @@
 # Códigos de CG 
 ### **Conteúdos:** 
 
-*Códigos de exercícios
-*Projeto
+* Códigos de exercícios
+* Projeto
