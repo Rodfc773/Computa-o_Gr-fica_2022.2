@@ -1,11 +1,12 @@
 #include <GL/gl.h>
-#include <GL/glut.h> //Bliblioteca responsavel por iniciar o glut
 #include <iostream>
 
+#include <GL/glut.h> //Bliblioteca responsavel por iniciar o glut
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
 
 void display(){ //função que faz o trabalho do desenho 
+
 
 }
 
