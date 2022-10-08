@@ -2,6 +2,8 @@
 #include <GL/glut.h>
 #include <GL/gl.h>
 
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
 /* Pra compilar gcc opengl.c -o gl -Ifreeglut/include -Lfreeglut/lib -lGL -lglut */
 
 
@@ -9,8 +11,8 @@
 
 
 // Initial square position and size
-GLfloat x1 = 0.0f;
-GLfloat y1 = 0.0f;
+GLfloat myx1 = 0.0f;
+GLfloat myy1 = 0.0f;
 GLfloat rsize = 25;
 
 // Step size in x and y directions
@@ -21,7 +23,7 @@ GLfloat ystep = 1.0f;
 GLfloat windowWidth;
 GLfloat windowHeight;
 
-void ChangeSize();
+void ChangeSize(GLsizei w, GLsizei h);
 void setupRC();
 void RenderScene();
 void TimerFunction(int value);
@@ -32,12 +34,12 @@ int main(int argc, char **argv){
     glutInit(&argc, argv);
 
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-    glutInitWindowSize(800,600);
+    glutInitWindowSize(WINDOW_WIDTH,WINDOW_HEIGHT);
     glutCreateWindow("Bounce");
+    setupRC();
     glutDisplayFunc(RenderScene);
     glutReshapeFunc(ChangeSize);
-    glutTimerFunc(33,TimerFunction,1);
-    setupRC();
+    glutTimerFunc(500,TimerFunction,5);
     glutMainLoop();
 
     return 0;
@@ -47,28 +49,28 @@ int main(int argc, char **argv){
 void TimerFunction(int value){
 
     // Reverse direction when you reach left or right edge
-    if(x1 > windowWidth-rsize || x1 < -windowWidth) xstep = -xstep;
+    if(myx1 > windowWidth-rsize || myx1 < -windowWidth) xstep = -xstep;
 
     // Reverse direction when you reach top or bottom edge
-    if(y1 > windowHeight || y1 < -windowHeight + rsize) ystep = -ystep;
+    if(myy1 > windowHeight || myy1 < -windowHeight + rsize) ystep = -ystep;
     // Actually move the square
-    x1 += xstep;
-    y1 += ystep;
+    myx1 += xstep;
+    myy1 += ystep;
     // Check bounds. This is in case the window is made
     // smaller while the rectangle is bouncing and the
     // rectangle suddenly finds itself outside the new
     // clipping volume
-    if(x1 > (windowWidth-rsize + xstep))
-    x1 = windowWidth-rsize-1;
-    else if(x1 < -(windowWidth + xstep))
-    x1 = - windowWidth -1;
-    if(y1 > (windowHeight + ystep))
-    y1 = windowHeight-1;
-    else if(y1 < -(windowHeight - rsize + ystep))
-    y1 = -windowHeight + rsize -1;
+    if(myx1 > (windowWidth-rsize + xstep))
+    myx1 = windowWidth-rsize-1;
+    else if(myx1 < -(windowWidth + xstep))
+    myx1 = - windowWidth -1;
+    if(myy1 > (windowHeight + ystep))
+    myy1 = windowHeight-1;
+    else if(myy1 < -(windowHeight - rsize + ystep))
+    myy1 = -windowHeight + rsize -1;
     // Redraw the scene with new coordinates
     glutPostRedisplay();
-    glutTimerFunc(33,TimerFunction, 1);
+    glutTimerFunc(500,TimerFunction, 5);
 }
 void RenderScene(void)
 {
@@ -78,7 +80,7 @@ glClear(GL_COLOR_BUFFER_BIT);
 //RGB
 glColor3f(1.0f, 0.0f, 0.0f);
 // Draw a filled rectangle with current color
-glRectf(x1, y1, x1 + rsize, y1 - rsize);
+glRectf(myx1, myy1, myx1 + rsize, myy1 - rsize);
 // Flush drawing commands and swap
 glutSwapBuffers();
 }
@@ -108,4 +110,12 @@ void ChangeSize(GLsizei w, GLsizei h)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
+void setupRC(){
 
+    //blackground color
+
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+    //Deixando a cor do desenho no verde
+    glColor3f(0.0f, 1.0f, 0.0f);
+}
