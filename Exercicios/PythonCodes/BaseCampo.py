@@ -1,3 +1,4 @@
+
 from cmath import cos, sin
 from contextlib import nullcontext
 from OpenGL.GL import *
@@ -8,14 +9,16 @@ import glm
 import pygame
 
 # tamanho da tela
-WINDOW_WIDHT = 1000
-WINDOW_HEIGHT = 1000
+WINDOW_WIDHT = 1280
+WINDOW_HEIGHT = 720
 
 # camera
 cameraPos = glm.vec3(0, 3.5, 30)
 cameraFront = glm.vec3(0, 0, -1)
 cameraUp = glm.vec3(0, 1, 0)
 angle = 0
+
+
 
 # mouse
 old_mouse_x = 0
@@ -29,6 +32,15 @@ mouse_sensitivity = 0.001
 half_width = WINDOW_WIDHT / 2
 half_height = WINDOW_HEIGHT / 2
 
+
+
+
+
+def draw_pixel(xo, zo):
+    
+    glBegin(GL_POINT)
+    glVertex2f(xo,zo)
+    glEnd()
 
 def draw_wall(x0, y0, z0, x1, y1, z1):
     glBegin(GL_QUADS)
@@ -48,13 +60,14 @@ def draw_floor(x, y, z, width, length): # x, y, z, largura, comprimento
     glEnd()
 
 
-def draw_block(x, y, z, width, length, height): # largura, comprimento, altura
+"""def draw_block(x, y, z, width, length, height): # largura, comprimento, altura
     draw_wall(x, y, z, x, y + height, z+length) # plano zy, parte esquerda
     draw_wall(x, y, z, x+width, y + height, z) # plano xy, parte traseira
     draw_wall(x+width, y, z, x + width, y + height, z + length) # plano zy, parte direita
     draw_wall(x, y, z+length, x + width, y + height, z + length) # plano xy, parte dianteira
     draw_floor(x, y, z, width, length) # parte de baixo
     draw_floor(x, y+height, z, width, length) # parte de cima
+    """
 
 def Bresenham(xo ,zo, xf,zf, y):
     dz = zf - zo
@@ -65,17 +78,35 @@ def Bresenham(xo ,zo, xf,zf, y):
     
     d = 2 * dz - dx
     glColor3f(1.0, 1.0, 1.0)
-    glBegin(GL_LINE)
-    while xo != xf and zo != zf:
+    # glBegin(GL_LINE)
+    
+    while xo <= xf and zo <= zf:
+        glLineWidth(350.0)
+        glBegin(GL_LINE_STRIP)
         glVertex3f(xo, y, zo)
+        #glEnd()
         
         if d <= 0:
-            xo += 1
-            d = d + E
+            if xo == xf:
+                d = d + E
+            else:
+                xo += 0.1
+                d = d + E
         else:
-            xo += 1
-            zo += 1
-            d = d + Ne
+            if xo == xf: 
+                zo += 0.1 
+                d = d + Ne
+                
+            elif zo == zf:
+                xo += 0.1
+                d = d + Ne
+            else:
+                xo += 0.1
+                zo += 0.1
+                d = d + Ne
+            
+        glVertex3f(xo, y, zo)
+        
         glEnd()
 def display():
     # limpa cor e buffers de profundidade
@@ -84,54 +115,43 @@ def display():
     glLoadIdentity()
 
     # define camera
-    # camx camy camz centerx centery centerz upx upy upz
     gluLookAt(cameraPos.x, cameraPos.y, cameraPos.z,
               cameraPos.x + cameraFront.x, cameraPos.y + cameraFront.y, cameraPos.z + cameraFront.z,
               cameraUp.x, cameraUp.y, cameraUp.z)
 
-############################################################################################################
-############################################################################################################
 
     glPushMatrix() # push
 
     # campo
     glColor3f(0.0, 1.0, 0.0)
     draw_floor(0, 0, 0, 35, 50)
-    Bresenham(0, 0, 35.0, 50.0 ,0.0)
-
-    # bloco 1
-    """
-    glColor3f(1.0, 1.0, 0.0)
-    draw_block(0, 0, 0, 0.1, 0.1, 0) # largura, comprimento, altura
-
-    glColor3f(1.0, 1.0, 0.0)
-    draw_block(1, 0, 0, 0.1, 0.1, 0) # largura, comprimento, altura
-
-    glColor3f(1.0, 1.0, 0.0)
-    draw_block(-1, 0, 0, 0.1, 0.1, 0) # largura, comprimento, altura
-
-    glColor3f(1.0, 1.0, 0.0)
-    draw_block(0, 1, 0, 0.1, 0.1, 0) # largura, comprimento, altura
-
-    glColor3f(1.0, 1.0, 0.0)
-    draw_block(0, -1, 0, 0.1, 0.1, 0) # largura, comprimento, altura
-
-    glColor3f(1.0, 1.0, 0.0)
-    draw_block(0, 0, 1, 0.1, 0.1, 0) # largura, comprimento, altura
-
-    glColor3f(1.0, 1.0, 0.0)
-    draw_block(0, 0, -1, 0.1, 0.1, 0) # largura, comprimento, altura
-
-    # bloco 2
-    glColor3f(0.0, 1.0, 0.0)
-    draw_block(2, 0, 0, 1, 1, 1) # largura, comprimento, altura
-    """
+    
+    #Desenha a linha  pelo bresenham nas bordas
+    Bresenham(0, 0, 35, 0,0)
+    Bresenham(0, 50, 35, 50,0.0)
+    Bresenham(35, 0.0, 35, 50,0.0)
+    Bresenham(0.0, 0.0, 0, 50,0.0)
+    
+    #Desenha as marcações do gol Esquerdo
+    Bresenham(12, 0.0, 12, 10, 0)
+    Bresenham(12, 10, 20, 10, 0)
+    Bresenham(20.0, 0, 20, 10, 0)
+    
+    #Desenha as marcações do gol direito
+    Bresenham(12, 40, 12, 50, 0)
+    Bresenham(12, 40, 20, 40, 0)
+    Bresenham(20, 40, 20, 50, 0)
+    
+    
+    
+    
+    
+    
+    
 
 
     glPopMatrix()  # pop
 
-############################################################################################################
-############################################################################################################
 
     glutSwapBuffers()
 
@@ -156,6 +176,11 @@ def keyboard(key, x, y):
         cameraPos.y += cameraSpeed/2
     elif key == 'e' or key == 'E':
         cameraPos.y -= cameraSpeed/2
+    elif key == 'm' or key == 'M':
+        cameraPos = glm.vec3(0, 3.5, 30)
+        cameraFront = glm.vec3(0, 0, -1)
+        cameraUp = glm.vec3(0, 1, 0)
+        angle = 0
 
     #controle da iluminação
     if key == 'r':
@@ -237,11 +262,6 @@ def setup_lighting():
 
     glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 20)
     glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 2.0)
-
-    # glLightfv(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 1)
-    # glLightfv(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.5)
-    # glLightfv(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.2)
-    # glLightfv(GL_LIGHT1, GL_SPOT_EXPONENT, 2.0)
 
 
 def main():
