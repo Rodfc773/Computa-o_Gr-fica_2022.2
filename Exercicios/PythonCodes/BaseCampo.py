@@ -304,7 +304,7 @@ def main():
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA)
     glutInitWindowPosition(0, 0)
     glutInitWindowSize(WINDOW_WIDHT, WINDOW_HEIGHT)
-    window = glutCreateWindow("Base do campo")
+    window = glutCreateWindow("Campo de futebol")
 
     #iluminação
     setup_lighting()
