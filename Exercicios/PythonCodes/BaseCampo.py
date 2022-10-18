@@ -81,10 +81,10 @@ def Bresenham(xo ,zo, xf,zf, y):
     # glBegin(GL_LINE)
     
     while xo <= xf and zo <= zf:
-        glLineWidth(350.0)
-        glBegin(GL_LINE_STRIP)
+        glPointSize(4.5)
+        glBegin(GL_POINTS)
         glVertex3f(xo, y, zo)
-        #glEnd()
+        glEnd()
         
         if d <= 0:
             if xo == xf:
@@ -105,9 +105,10 @@ def Bresenham(xo ,zo, xf,zf, y):
                 zo += 0.1
                 d = d + Ne
             
-        glVertex3f(xo, y, zo)
+        #glVertex3f(xo, y, zo)
         
-        glEnd()
+        #glEnd()
+
 def display():
     # limpa cor e buffers de profundidade
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
