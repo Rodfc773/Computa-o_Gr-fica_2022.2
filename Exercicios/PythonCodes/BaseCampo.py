@@ -18,7 +18,9 @@ cameraFront = glm.vec3(0, 0, -1)
 cameraUp = glm.vec3(0, 1, 0)
 angle = 0
 
-
+#posição inicial da bola
+xi = 25
+zi = 37.5
 
 # mouse
 old_mouse_x = 0
@@ -35,7 +37,14 @@ half_height = WINDOW_HEIGHT / 2
 
 
 
-
+def sphere():
+    global xi, zi
+    if (xi > 50 or xi  < 0) or (zi > 75 or zi < 0):
+        xi = 25
+        zi = 37.5
+    glTranslatef(xi, 0.5, zi)
+    glColor3f(0,0, 1)
+    glutSolidSphere(0.5,128,128)
 def draw_pixel(xo, zo):
     
     glBegin(GL_POINT)
@@ -108,7 +117,6 @@ def Bresenham(xo ,zo, xf,zf, y):
         #glVertex3f(xo, y, zo)
         
         #glEnd()
-
 def display():
     # limpa cor e buffers de profundidade
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -156,6 +164,8 @@ def display():
     
     #Desnehando a linha central
     Bresenham(0, 37.5, 50, 37.5, 0)
+    sphere()
+
     
 
 
@@ -166,7 +176,7 @@ def display():
 
 
 def keyboard(key, x, y):
-    global angle, cameraFront, cameraUp, cameraPos, light_ambient, light_specular, light_diffuse
+    global angle, cameraFront, cameraUp, cameraPos, light_ambient, light_specular, light_diffuse, zi, xi
 
     cameraSpeed = 0.5
 
@@ -196,6 +206,21 @@ def keyboard(key, x, y):
         glEnable(GL_LIGHT0)
     if key == 't':
         glDisable(GL_LIGHT0)
+    
+    #controle da bola
+    if key == 'K' or key == 'k':
+        zi += 0.5
+        display()
+    if key == 'H' or key == 'h':
+        zi -= 0.5
+        display()
+        
+    if key == 'I' or key == 'i':
+        xi += 0.5
+        display()
+    if key == 'N' or key == 'n':
+        xi -= 0.5
+        display()
 
 
     glutPostRedisplay()
