@@ -123,30 +123,38 @@ def display():
     glPushMatrix() # push
 
     # campo
+    tam = 50
+    largura = 75
     glColor3f(0.0, 1.0, 0.0)
-    draw_floor(0, 0, 0, 35, 50)
+    draw_floor(0, 0, 0, tam, largura)
     
     #Desenha a linha  pelo bresenham nas bordas
-    Bresenham(0, 0, 35, 0,0)
-    Bresenham(0, 50, 35, 50,0.0)
-    Bresenham(35, 0.0, 35, 50,0.0)
-    Bresenham(0.0, 0.0, 0, 50,0.0)
+    Bresenham(0, 0, tam, 0,0)
+    Bresenham(0, largura, tam, largura,0.0)
+    Bresenham(tam, 0.0, tam, largura,0.0)
+    Bresenham(0.0, 0.0, 0, largura,0.0)
     
     #Desenha as marcações do gol Esquerdo
-    Bresenham(12, 0.0, 12, 10, 0)
-    Bresenham(12, 10, 20, 10, 0)
-    Bresenham(20.0, 0, 20, 10, 0)
+    Bresenham(20, 0.0, 20, 4, 0)
+    Bresenham(20, 4, 33, 4, 0)
+    Bresenham(33, 0, 33, 4, 0)
+    #Desenha a area fora do gol esquerdo
+    Bresenham(17 , 0, 17, 10, 0)
+    Bresenham(17 , 10 ,36, 10, 0)
+    Bresenham(36 , 0 ,36, 10, 0)
     
     #Desenha as marcações do gol direito
-    Bresenham(12, 40, 12, 50, 0)
-    Bresenham(12, 40, 20, 40, 0)
-    Bresenham(20, 40, 20, 50, 0)
+    Bresenham(20 , largura - 4, 20, largura, 0)
+    Bresenham(20, largura - 4, 33, largura - 4, 0)
+    Bresenham(33, largura - 4, 33, largura, 0)
+
+    #Desenha as marcações externa do gol direito
+    Bresenham(17, largura - 10, 17, largura, 0)
+    Bresenham(17, largura - 10, 36, largura - 10, 0)
+    Bresenham(36, largura - 10, 36, largura,0)
     
-    
-    
-    
-    
-    
+    #Desnehando a linha central
+    Bresenham(0, 37.5, 50, 37.5, 0)
     
 
 
