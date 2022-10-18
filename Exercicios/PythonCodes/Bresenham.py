@@ -7,6 +7,14 @@ from OpenGL.GLU import *
 WINDOW_WIDHT = 1280
 WINDOW_HEIGHT = 720
 
+xo,yo,xf,yf = 1 , 1 , 4, 2
+
+def draw_pixel(xo,yo): 
+    glColor3f(1.0, 1.0, 1.0)
+    
+    glBegin(GL_POINTS)
+    glVertex3f(xo, yo, 0)
+    glEnd()
 def bresenham(xo, yo, xf, yf):
     dy = yf - yo
     dx = xf - xo
@@ -15,12 +23,8 @@ def bresenham(xo, yo, xf, yf):
     Ne = 2 * (dy - dx)
     
     d = 2 * dy - dx
-    glColor3f(1.0, 1.0, 1.0)
-    
-    glBegin(GL_POINTS)
-    glVertex3f(xo, yo, 0)
-    glEnd()
     while xo != xf:
+        draw_pixel(xo,yo)
         if d <= 0:
             xo += 1
             d = d + E
@@ -28,9 +32,7 @@ def bresenham(xo, yo, xf, yf):
             xo += 1
             yo += 1
             d = d + Ne
-        glBegin(GL_POINTS)
-        glVertex3f(xo, yo, 0)
-        glEnd()
+    display()
 def change_side(w, h):
     global half_width, half_height
     if h == 0:
@@ -58,7 +60,7 @@ def display():
     glPushMatrix()
 
     
-    bresenham(1, 1, 4, 2)
+    bresenham(xo, yo, xf, yf)
     glPopMatrix()
     
     glutSwapBuffers()
