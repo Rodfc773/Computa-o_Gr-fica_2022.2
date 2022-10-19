@@ -58,6 +58,72 @@ def draw_wall(x0, y0, z0, x1, y1, z1):
     glVertex3f(x0, y1, z0)
     glEnd()
 
+def Square(A, B, C, D):
+    glBegin(GL_POLYGON);
+
+    glVertex3fv(A);
+    glVertex3fv(B);
+    glVertex3fv(C);
+    glVertex3fv(D);
+
+    glEnd();
+
+def rep( t0, t1, t2, t3, t4, t5, t6, t7):
+    glColor3f(1,1,1)
+    Square(t0, t1, t2, t3)
+
+    glColor3f(1,1,1)
+    Square(t4, t5, t6, t7)
+
+    glColor3f(1,1,1)
+    Square(t0, t4, t7, t3)
+
+    glColor3f(1,1,1)
+    Square(t1, t5, t6, t2)
+
+    glColor3f(1,1,1)
+    Square(t3, t2, t6, t7)
+
+    glColor3f(1,1,1)
+    Square(t0, t1, t5, t4)
+
+def trave():
+    t1i =   [
+                [23.5, 5.5, 0],
+                [23, 5.5, 0],
+                [23, 0, 0],
+                [23.5, 0, 0],
+                [23.5, 5.5, 0.5],
+                [23, 5.5, 0.5],
+                [23, 0, 0.5],
+                [23.5, 0, 0.5],
+            ]
+
+    t2i =   [
+                [28.02, 5.5, 0],
+                [28, 5.5, 0],
+                [28, -3, 0],
+                [28.02, -3, 0],
+                [28.02, 5.5, 0.5],
+                [28, 5.5, 0.5],
+                [28, -3, 0.5],
+                [28.02, -3, 0.5],
+            ]
+    
+    t3i =   [
+                [28.02, 5.5, 0],
+                [23, 5.5, 0],
+                [23, 5, 0],
+                [28.02, 5, 0],
+                [28.02, 5.5, 0.5],
+                [23, 5.5, 0.5],
+                [23, 5, 0.5],
+                [28.02, 5, 0.5],
+            ]
+    
+    rep(t1i[0], t1i[1], t1i[2], t1i[3], t1i[4], t1i[5], t1i[6], t1i[7])
+    rep(t2i[0], t2i[1], t2i[2], t2i[3], t2i[4], t2i[5], t2i[6], t2i[7])
+    rep(t3i[0], t3i[1], t3i[2], t3i[3], t3i[4], t3i[5], t3i[6], t3i[7])
 
 def draw_floor(x, y, z, width, length): # x, y, z, largura, comprimento
     glBegin(GL_QUADS)
@@ -174,11 +240,15 @@ def display():
     #Desnehando a linha central
     Bresenham(0, 37.5, 50, 37.5, 0)
     sphere()
-
-    
-
-
     glPopMatrix()  # pop
+
+    glPushMatrix()
+
+    trave()
+
+    glPopMatrix()
+
+
 
 
     glutSwapBuffers()
@@ -220,14 +290,14 @@ def keyboard(key, x, y):
     if key == 'K' or key == 'k':
         zi += 0.5
         display()
-    if key == 'H' or key == 'h':
+    if key == 'I' or key == 'i':
         zi -= 0.5
         display()
         
-    if key == 'I' or key == 'i':
+    if key == 'L' or key == 'l':
         xi += 0.5
         display()
-    if key == 'N' or key == 'n':
+    if key == 'J' or key == 'j':
         xi -= 0.5
         display()
 
