@@ -1,4 +1,3 @@
-
 from cmath import cos, sin
 from contextlib import nullcontext
 from OpenGL.GL import *
@@ -69,15 +68,20 @@ def draw_floor(x, y, z, width, length): # x, y, z, largura, comprimento
     glEnd()
 
 
-"""def draw_block(x, y, z, width, length, height): # largura, comprimento, altura
+def draw_block(x, y, z, width, length, height): # largura, comprimento, altura
     draw_wall(x, y, z, x, y + height, z+length) # plano zy, parte esquerda
     draw_wall(x, y, z, x+width, y + height, z) # plano xy, parte traseira
     draw_wall(x+width, y, z, x + width, y + height, z + length) # plano zy, parte direita
     draw_wall(x, y, z+length, x + width, y + height, z + length) # plano xy, parte dianteira
-    draw_floor(x, y, z, width, length) # parte de baixo
+    #draw_floor(x, y, z, width, length) # parte de baixo
     draw_floor(x, y+height, z, width, length) # parte de cima
-    """
-
+    
+def draw_arredores(x, y, z, width, length, height):
+    draw_wall(x, y, z, x, y + height, z+length) # plano zy, parte esquerda
+    draw_wall(x, y, z, x+width, y + height, z) # plano xy, parte traseira
+    draw_wall(x+width, y, z, x + width, y + height, z + length) # plano zy, parte direita
+    draw_wall(x, y, z+length, x + width, y + height, z + length) # plano xy, parte dianteira
+    
 def Bresenham(xo ,zo, xf,zf, y):
     dz = zf - zo
     dx = xf - xo
@@ -134,8 +138,13 @@ def display():
     # campo
     tam = 50
     largura = 75
-    glColor3f(0.0, 1.0, 0.0)
+    glColor3f(0.0, 0.7, 0.4)
     draw_floor(0, 0, 0, tam, largura)
+    glColor3f(0, 0.7, 0.4)
+    draw_block(0, 0, 0, tam, largura, 2.5)
+    glColor3f(1, 1, 0)
+    glTranslatef(0, 2.5, 0)
+    draw_arredores(0, 0, 0, tam, largura, 3)
     
     #Desenha a linha  pelo bresenham nas bordas
     Bresenham(0, 0, tam, 0,0)
@@ -304,7 +313,7 @@ def main():
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA)
     glutInitWindowPosition(0, 0)
     glutInitWindowSize(WINDOW_WIDHT, WINDOW_HEIGHT)
-    window = glutCreateWindow("Base do campo")
+    window = glutCreateWindow("Campo de futebol")
 
     #iluminação
     setup_lighting()
