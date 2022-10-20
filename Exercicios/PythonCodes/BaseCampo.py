@@ -120,10 +120,45 @@ def trave():
                 [23, 5, 0.5],
                 [28.02, 5, 0.5],
             ]
+    t4i =  [
+            [28.02, 5.5, 75],
+                [23, 5.5, 75],
+                [23, 5, 75],
+                [28.02, 5, 75],
+                [28.02, 5.5, 74.5],
+                [23, 5.5, 74.5],
+                [23, 5, 74.5],
+                [28.02, 5, 74.5],
+         ]
+    t5i = [
+                 [28.02, 5.5, 75],
+                [28, 5.5, 75],
+                [28, -3, 75],
+                [28.02, -3, 75],
+                [28.02, 5.5, 74.5],
+                [28, 5.5, 74.5],
+                [28, -3, 74.5],
+                [28.02, -3, 74.5],
+    ]
+    t6i = [
+        
+                [23.5, 5.5, 75],
+                [23, 5.5, 75],
+                [23, 0, 75],
+                [23.5, 0, 75],
+                [23.5, 5.5, 74.5],
+                [23, 5.5, 74.5],
+                [23, 0, 74.5],
+                [23.5, 0, 74.5],
+    ]
     
     rep(t1i[0], t1i[1], t1i[2], t1i[3], t1i[4], t1i[5], t1i[6], t1i[7])
     rep(t2i[0], t2i[1], t2i[2], t2i[3], t2i[4], t2i[5], t2i[6], t2i[7])
     rep(t3i[0], t3i[1], t3i[2], t3i[3], t3i[4], t3i[5], t3i[6], t3i[7])
+    rep(t4i[0], t4i[1], t4i[2], t4i[3], t4i[4], t4i[5], t4i[6], t4i[7])
+    rep(t5i[0], t5i[1], t5i[2], t5i[3], t5i[4], t5i[5], t5i[6], t5i[7])
+    rep(t6i[0], t6i[1], t6i[2], t6i[3], t6i[4], t6i[5], t6i[6], t6i[7])
+    
 
 def draw_floor(x, y, z, width, length): # x, y, z, largura, comprimento
     glBegin(GL_QUADS)
@@ -210,7 +245,7 @@ def display():
     draw_block(0, 0, 0, tam, largura, 2.5)
     glColor3f(1, 1, 0)
     glTranslatef(0, 2.5, 0)
-    draw_arredores(0, 0, 0, tam, largura, 3)
+    draw_arredores(0, 0, 0, tam, largura, 1.5)
     
     #Desenha a linha  pelo bresenham nas bordas
     Bresenham(0, 0, tam, 0,0)
