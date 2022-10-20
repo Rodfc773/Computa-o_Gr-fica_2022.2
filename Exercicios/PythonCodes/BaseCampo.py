@@ -1,5 +1,6 @@
 from cmath import cos, sin
 from contextlib import nullcontext
+import string
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
@@ -12,7 +13,7 @@ WINDOW_WIDHT = 1280
 WINDOW_HEIGHT = 720
 
 # camera
-cameraPos = glm.vec3(0, 3.5, 30)
+cameraPos = glm.vec3(10, 15, 30)
 cameraFront = glm.vec3(0, 0, -1)
 cameraUp = glm.vec3(0, 1, 0)
 angle = 0
@@ -87,6 +88,12 @@ def rep( t0, t1, t2, t3, t4, t5, t6, t7):
     glColor3f(1,1,1)
     Square(t0, t1, t5, t4)
 
+def RenderString(x, y, font):
+    global string
+    
+    glColor3f(1, 1, 1)
+    glRasterPos2f(x, y)
+    glutBitmapString(font, string);
 def trave():
     t1i =   [
                 [23.5, 5.5, 0],
@@ -102,12 +109,12 @@ def trave():
     t2i =   [
                 [28.02, 5.5, 0],
                 [28, 5.5, 0],
-                [28, -3, 0],
-                [28.02, -3, 0],
+                [28, 0, 0],
+                [28.02, 0, 0],
                 [28.02, 5.5, 0.5],
                 [28, 5.5, 0.5],
-                [28, -3, 0.5],
-                [28.02, -3, 0.5],
+                [28, 0, 0.5],
+                [28.02, 0, 0.5],
             ]
     
     t3i =   [
@@ -133,12 +140,12 @@ def trave():
     t5i = [
                  [28.02, 5.5, 75],
                 [28, 5.5, 75],
-                [28, -3, 75],
-                [28.02, -3, 75],
+                [28, 0, 75],
+                [28.02, 0, 75],
                 [28.02, 5.5, 74.5],
                 [28, 5.5, 74.5],
-                [28, -3, 74.5],
-                [28.02, -3, 74.5],
+                [28, 0, 74.5],
+                [28.02, 0, 74.5],
     ]
     t6i = [
         
@@ -280,6 +287,8 @@ def display():
     glPushMatrix()
 
     trave()
+    #RenderString(0, 12, GLUT_BITMAP_TIMES_RIMAN_24)
+    
 
     glPopMatrix()
 
@@ -310,7 +319,7 @@ def keyboard(key, x, y):
     elif key == 'e' or key == 'E':
         cameraPos.y -= cameraSpeed/2
     elif key == 'm' or key == 'M':
-        cameraPos = glm.vec3(0, 3.5, 30)
+        cameraPos = glm.vec3(10, 15, 30)
         cameraFront = glm.vec3(0, 0, -1)
         cameraUp = glm.vec3(0, 1, 0)
         angle = 0
